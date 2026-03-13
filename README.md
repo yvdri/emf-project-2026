@@ -15,7 +15,7 @@ Les concepts clés à retenir :
 - **Commit** : enregistrer une modification avec un message descriptif
 - **Push** : envoyer vos commits vers GitHub
 - **Pull** : récupérer les dernières modifications faites par vos coéquipiers
-- **Branch** : une version parallèle du projet (utile pour travailler sans risquer d'écraser le travail des autres)
+- **Branch** : une version parallèle du projet (expliqué en détail plus bas !)
 
 ---
 
@@ -89,28 +89,112 @@ git push origin main
 
 ---
 
-## 🌿 Travailler avec des branches (recommandé pour éviter les conflits)
+## 🌿 Les branches — explication complète pour débutants
 
-Plutôt que de travailler tous directement sur main, chaque personne crée sa propre **branche**.
+> ⚠️ C'est la partie la plus importante pour travailler en groupe sans se marcher dessus.
 
-### Créer et basculer sur une nouvelle branche
+### D'abord : c'est quoi une branche ?
+
+Une branche **n'est pas un nouveau fichier** et **n'est pas un nouveau dossier**. C'est une **version parallèle de tout le projet** qui existe uniquement dans Git.
+
+Imaginez que le projet est un document Word. Sans branches, tout le monde ouvre et modifie le même document en même temps — résultat : le chaos. Avec des branches, chaque personne travaille sur **sa propre copie**, et quand c'est prêt, on fusionne tout ensemble proprement.
+
+La branche principale s'appelle `main`. C'est la version "officielle" du projet.  
+**Règle d'or : on ne travaille jamais directement sur `main`.**
+
+---
+
+### Exemple concret avec 4 personnes
+
+Disons que votre groupe s'appelle Alice, Bob, Charlie et Rijad. Chacun a une tâche différente :
+
+| Personne | Tâche |
+|---|---|
+| Rijad | Nettoyage des données |
+| Alice | Régression OLS |
+| Bob | Visualisation des résultats |
+| Charlie | Rédaction du rapport |
+
+Chacun crée **sa propre branche** et travaille dedans sans gêner les autres.
+
+---
+
+### Comment utiliser les branches — pas à pas
+
+#### 1. Avant de commencer à travailler, mettez-vous à jour
 ```bash
-git checkout -b prenom/ma-feature
+git pull origin main
 ```
-Par exemple : git checkout -b rijad/analyse-volatilite
 
-### Vérifier sur quelle branche vous êtes
+#### 2. Créez votre branche personnelle et basculez dessus
+```bash
+git checkout -b rijad/nettoyage-donnees
+```
+> Cette commande fait deux choses à la fois : elle **crée** la branche ET vous **place dessus** automatiquement.
+> Le nom de la branche peut être ce que vous voulez. Convention recommandée : `prenom/description-courte`
+
+#### 3. Vérifiez que vous êtes bien sur votre branche
 ```bash
 git branch
 ```
-
-### Envoyer votre branche sur GitHub
-```bash
-git push origin prenom/ma-feature
+Vous verrez une liste de branches. Celle avec une `*` devant est celle sur laquelle vous êtes actuellement :
+```
+  main
+* rijad/nettoyage-donnees
 ```
 
-### Fusionner votre branche dans main (via Pull Request)
-Ne fusionnez pas directement depuis votre terminal. Allez sur GitHub, cliquez sur "Compare & pull request", et demandez à un coéquipier de relire avant de merger.
+#### 4. Travaillez normalement sur vos fichiers
+Ouvrez VS Code, modifiez vos scripts Python, vos notebooks... Tout ce que vous faites ici **ne touche pas à `main`**. Vous êtes en sécurité.
+
+#### 5. Sauvegardez votre travail (add + commit) comme d'habitude
+```bash
+git add .
+git commit -m "Nettoyage des valeurs manquantes dans les prix"
+```
+
+#### 6. Envoyez votre branche sur GitHub
+```bash
+git push origin rijad/nettoyage-donnees
+```
+
+#### 7. Créez une Pull Request sur GitHub pour fusionner dans main
+
+C'est l'étape finale : vous proposez d'intégrer votre travail dans la version officielle.
+
+1. Allez sur https://github.com/yvdri/emf-project-2026
+2. GitHub va afficher une bannière jaune : **"Compare & pull request"** — cliquez dessus
+3. Ajoutez un titre et une description de ce que vous avez fait
+4. Cliquez sur **"Create pull request"**
+5. Un coéquipier relit votre travail et clique sur **"Merge pull request"**
+6. Votre travail est maintenant dans `main` ! 🎉
+
+#### 8. Après la fusion, revenez sur main et mettez-vous à jour
+```bash
+git checkout main
+git pull origin main
+```
+
+---
+
+### Résumé visuel du flux de travail avec branches
+
+```
+main ──────────────────────────────────────────► (version officielle)
+         │                              ▲
+         │ git checkout -b              │ Pull Request + Merge
+         ▼                              │
+rijad/nettoyage ── commit ── commit ── push
+```
+
+---
+
+### Les erreurs fréquentes à éviter avec les branches
+
+| Erreur | Conséquence | Solution |
+|---|---|---|
+| Oublier de créer une branche et travailler sur `main` | Risque d'écraser le travail des autres | Toujours vérifier avec `git branch` avant de commencer |
+| Oublier de faire `git pull` avant de créer sa branche | Votre branche part d'une version ancienne | Toujours `git pull origin main` en premier |
+| Pusher directement sur `main` sans Pull Request | Pas de relecture, risque de bugs | Toujours passer par une Pull Request |
 
 ---
 
@@ -133,9 +217,9 @@ emf-project-2026/
 
 | Commande | Pourquoi c'est dangereux |
 |---|---|
-| git push --force | Écrase l'historique sur GitHub, peut supprimer le travail des autres |
-| git reset --hard | Supprime définitivement vos modifications locales non sauvegardées |
-| git rm -r . | Supprime tous les fichiers du repo |
+| `git push --force` | Écrase l'historique sur GitHub, peut supprimer le travail des autres |
+| `git reset --hard` | Supprime définitivement vos modifications locales non sauvegardées |
+| `git rm -r .` | Supprime tous les fichiers du repo |
 | Modifier directement sur GitHub ET localement en même temps | Crée des conflits difficiles à résoudre |
 
 ---
@@ -153,9 +237,9 @@ version de votre coéquipier
 >>>>>>> main
 ```
 2. Choisissez quelle version garder (ou combinez les deux manuellement)
-3. Supprimez les marqueurs, puis faites un git add et un git commit
+3. Supprimez les marqueurs, puis faites un `git add` et un `git commit`
 
-> 💡 Pour éviter les conflits : communiquez avec votre groupe sur qui travaille sur quoi, et faites des git pull fréquents.
+> 💡 Pour éviter les conflits : communiquez avec votre groupe sur qui travaille sur quoi, et faites des `git pull` fréquents.
 
 ---
 
@@ -171,14 +255,15 @@ Pour inviter vos coéquipiers au repository privé :
 ## 📋 Commandes de référence rapide
 
 ```bash
-git status          # Voir l'état des fichiers
-git pull            # Récupérer les dernières modifications
-git add .           # Ajouter tous les fichiers modifiés
-git commit -m "msg" # Enregistrer avec un message
-git push            # Envoyer sur GitHub
-git log --oneline   # Voir l'historique des commits
-git branch          # Voir les branches existantes
-git checkout -b nom # Créer et basculer sur une nouvelle branche
+git status                        # Voir l'état des fichiers
+git pull origin main              # Récupérer les dernières modifications
+git checkout -b prenom/ma-tache   # Créer et basculer sur une nouvelle branche
+git branch                        # Vérifier sur quelle branche on est
+git add .                         # Ajouter tous les fichiers modifiés
+git commit -m "message"           # Enregistrer avec un message
+git push origin prenom/ma-tache   # Envoyer sa branche sur GitHub
+git checkout main                 # Revenir sur main
+git log --oneline                 # Voir l'historique des commits
 ```
 
 ---
@@ -186,10 +271,11 @@ git checkout -b nom # Créer et basculer sur une nouvelle branche
 ## 🆘 En cas de problème
 
 Si vous êtes bloqué :
-1. Ne paniquez pas et ne forcez rien
-2. Tapez git status pour comprendre l'état du repo
-3. Cherchez le message d'erreur sur Google — la communauté Git est très active
-4. Demandez à un coéquipier avant de faire une action irréversible
+1. **Ne paniquez pas et ne forcez rien**
+2. Tapez `git status` pour comprendre l'état du repo
+3. Tapez `git branch` pour savoir sur quelle branche vous êtes
+4. Cherchez le message d'erreur sur Google — la communauté Git est très active
+5. Demandez à un coéquipier avant de faire une action irréversible
 
 ---
 
