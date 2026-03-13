@@ -54,6 +54,23 @@ La branche `main` = la version officielle et validée du projet. **On n'y touche
 
 ---
 
+## ✅ Le principe fondamental — à lire avant tout le reste
+
+> **Chacun bosse sur sa propre branche → chacun push sur sa propre branche → on merge dans main → Git combine tout sans rien perdre.**
+
+C'est vraiment aussi simple que ça. Voici ce que ça veut dire concrètement :
+
+1. **Vous créez votre branche** : votre espace de travail isolé, personne d'autre ne le touche
+2. **Vous travaillez et vous push** : vos modifications vont sur *votre branche* sur GitHub — `main` n'est pas touché du tout
+3. **Vous créez une Pull Request** : vous proposez d'intégrer votre travail dans `main`
+4. **On merge** : Git prend les modifications de votre branche et les **combine** dans `main` — il ne remplace pas, il ajoute
+
+**Ce que Git fait lors du merge :** il compare fichier par fichier, ligne par ligne. Si Rijad a modifié `data_cleaning.py` et Alice a modifié `regression.py`, les deux fichiers sont intégrés sans problème. Si par hasard deux personnes ont modifié **exactement la même ligne du même fichier**, Git signale un conflit et demande à un humain de choisir — mais même là, rien n'est perdu.
+
+**La seule règle** pour éviter les conflits : communiquez sur qui travaille sur quel fichier.
+
+---
+
 ## 📖 Scénario complet — une session de travail réelle
 
 > Voici exactement ce que fait **Rijad** un lundi matin pour travailler sur le nettoyage des données, sans gêner ses coéquipiers Alice, Bob et Charlie qui travaillent en parallèle.
