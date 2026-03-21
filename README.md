@@ -260,10 +260,16 @@ version du coéquipier
 ## 📋 Commandes de référence rapide
 
 ```bash
-# Début de session (toujours faire ça en premier)
+# 1er fois !!!! Début de session (toujours faire ça en premier)
 git checkout main
 git pull origin main
-git checkout -b prenom/ma-tache (le -b ici il crée la branche donc juste la premiere fois après faut faire sans le "-b")
+git checkout -b prenom/ma-tache 
+
+# Toutes les fois d'après, debut de session, pour recup le main sur sa branche :
+git checkout main # ICI on verifie si la version,joue et est correcte parce que si elle joue pas et qu'on fait les codes suivants ça ecrase notre branche avec le main (qui joue pas)
+git checkout -b prenom/ma-tache 
+git pull origin main
+
 
 # Pendant le travail 
 git branch                        # Vérifier sur quelle branche on est
