@@ -274,7 +274,7 @@ git status                        # Voir les fichiers modifiés
 git add .                         # Préparer tous les fichiers
 git commit -m "message"           # Sauvegarder avec un message
 git push origin prenom/ma-tache   # Envoyer sa branche sur GitHub
-# Puis créer une Pull Request sur GitHub !!! donc faut faire ça sur Github c'est très important !!
+# Puis créer une Pull Request sur GitHub !!! donc faut faire ça sur Github c'est très important !! et ensuite faire la suite :
 
 # Après le merge
 git checkout main
