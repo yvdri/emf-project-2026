@@ -263,17 +263,18 @@ version du coéquipier
 # Début de session (toujours faire ça en premier)
 git checkout main
 git pull origin main
-git checkout -b prenom/ma-tache
+git checkout -b prenom/ma-tache (le -b ici il crée la branche donc juste la premiere fois après faut faire sans le "-b")
 
-# Pendant le travail
+# Pendant le travail 
 git branch                        # Vérifier sur quelle branche on est
+
+
+# Fin de session (envoyer son travail)
 git status                        # Voir les fichiers modifiés
 git add .                         # Préparer tous les fichiers
 git commit -m "message"           # Sauvegarder avec un message
-
-# Fin de session (envoyer son travail)
 git push origin prenom/ma-tache   # Envoyer sa branche sur GitHub
-# Puis créer une Pull Request sur GitHub
+# Puis créer une Pull Request sur GitHub !!! donc faut faire ça sur Github c'est très important !!
 
 # Après le merge
 git checkout main
