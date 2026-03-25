@@ -267,7 +267,7 @@ git checkout -b prenom/ma-tache
 
 # Toutes les fois d'après, debut de session, pour recup le main sur sa branche :
 git checkout main # ICI on verifie si la version,joue et est correcte parce que si elle joue pas et qu'on fait les codes suivants ça ecrase notre branche avec le main (qui joue pas)
-git checkout -b prenom/ma-tache 
+git checkout prenom/ma-tache 
 git pull origin main
 
 
